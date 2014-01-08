@@ -3,10 +3,7 @@ package com.bugsnag;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.classic.spi.IThrowableProxy;
 import ch.qos.logback.classic.spi.StackTraceElementProxy;
-import com.bugsnag.model.EventVO;
-import com.bugsnag.model.ExceptionVO;
-import com.bugsnag.model.NotificationVO;
-import com.bugsnag.model.StackTraceVO;
+import com.bugsnag.model.*;
 import com.google.common.collect.Lists;
 import java.util.Collections;
 import java.util.List;
@@ -41,7 +38,15 @@ class Converter {
         event.setOsVersion(getValueFor(loggingEvent, OS_VERSION));
         event.setContext(getValueFor(loggingEvent, CONTEXT));
         event.setGroupingHash(getValueFor(loggingEvent, GROUPING_HASH));
+        event.setMetaData(convertToMetaData(loggingEvent));
         return Collections.singletonList(event);
+    }
+
+    private MetaDataVO convertToMetaData(ILoggingEvent event) {
+        MetaDataVO metaData = new MetaDataVO();
+        metaData.addToLoggingTab("level", event.getLevel().toString());
+        metaData.addToLoggingTab("message", event.getFormattedMessage());
+        return metaData;
     }
 
     private String getValueFor(final ILoggingEvent loggingEvent, final String key) {

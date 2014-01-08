@@ -63,6 +63,14 @@ public class EventVO {
      */
     private List<ExceptionVO> exceptions = Lists.newArrayList();
 
+    /**
+     * An object containing any further data you wish to attach to this error
+     * event. This should contain one or more objects, with each object being
+     * displayed in its own tab on the event details on the Bugsnag website.
+     * (Optional).
+     */
+    private MetaDataVO metaData;
+
     public String getUserId() {
         return userId;
     }
@@ -117,5 +125,13 @@ public class EventVO {
 
     public void setExceptions(List<ExceptionVO> exceptions) {
         this.exceptions = exceptions;
+    }
+
+    public MetaDataVO getMetaData() {
+        return metaData;
+    }
+
+    public void setMetaData(MetaDataVO metaData) {
+        this.metaData = metaData;
     }
 }
